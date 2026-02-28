@@ -34,10 +34,10 @@ public class BorrowingSpecifications {
         });
     }
 
-    public static Specification<Borrowing> byActive(Boolean active) {
+    public static Specification<Borrowing> byReturned(Boolean returned) {
         return ((root, query, criteriaBuilder) -> {
-            if(active == null) return null;
-            return criteriaBuilder.equal(root.get("active"), active);
+            if(returned == null) return null;
+            return criteriaBuilder.equal(root.get("returned"), returned);
         });
     }
 

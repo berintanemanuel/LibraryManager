@@ -53,7 +53,7 @@ public class BorrowingService {
                 .and(BorrowingSpecifications.byBookId(filter.bookId()))
                 .and(BorrowingSpecifications.byBorrowDate(filter.borrowDate()))
                 .and(BorrowingSpecifications.byReturnDate(filter.returnDate()))
-                .and(BorrowingSpecifications.byActive(filter.active()));
+                .and(BorrowingSpecifications.byReturned(filter.returned()));
         return borrowingRepository.findAll(specification);
     }
 }

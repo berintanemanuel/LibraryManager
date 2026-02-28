@@ -21,10 +21,10 @@ public class BorrowingController {
     @GetMapping
     public List<Borrowing> getBorrowings(@RequestParam(required = false) Long memberId,
                                          @RequestParam(required = false) Long bookId,
-                                         @RequestParam(required = false) Boolean active,
+                                         @RequestParam(required = false) Boolean returned,
                                          @RequestParam(required = false) LocalDate borrowDate,
                                          @RequestParam(required = false) LocalDate returnDate) {
-        return borrowingService.getBorrowings(new SearchBorrowingFilter(memberId, borrowDate, returnDate, bookId, active));
+        return borrowingService.getBorrowings(new SearchBorrowingFilter(memberId, borrowDate, returnDate, bookId, returned));
     }
 
 }
