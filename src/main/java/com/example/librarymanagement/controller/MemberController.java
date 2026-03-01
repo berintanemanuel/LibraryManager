@@ -1,12 +1,11 @@
 package com.example.librarymanagement.controller;
 
 import com.example.librarymanagement.model.Member;
+import com.example.librarymanagement.model.dto.SearchMemberFilter;
 import com.example.librarymanagement.service.MemberService;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RequestMapping("/members")
@@ -18,14 +17,18 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    public List<Member> getMembers(@RequestParam(required = false) String lastName){
-        return this.memberService.getMembers(lastName);
+    @GetMapping
+    public List<Member> getMembers(@RequestParam(required = false) Long id,
+                                   @RequestParam(required = false) String firstName,
+                                   @RequestParam(required = false) String lastName,
+                                   @RequestParam(required = false) String email,
+                                   @RequestParam(required = false) LocalDate startDateOfBirth,
+                                   @RequestParam(required = false) LocalDate endDateOfBirth,
+                                   @RequestParam(required = false) Boolean active){
+        return this.memberService.getMembers(new SearchMemberFilter(id, firstName, lastName, active, startDateOfBirth, endDateOfBirth, email));
     }
 
-    public Member getMemberById(@RequestParam Long id){
-        return this.memberService.getMemberById(id);
-    }
-
+    @PostMapping
     public void addMember(@RequestBody Member member){
         this.memberService.addMember(member);
     }

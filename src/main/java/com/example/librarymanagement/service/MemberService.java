@@ -3,8 +3,11 @@ package com.example.librarymanagement.service;
 import com.example.librarymanagement.exceptions.DuplicateMemberException;
 import com.example.librarymanagement.exceptions.MemberNonExistentException;
 import com.example.librarymanagement.model.Member;
+import com.example.librarymanagement.model.dto.SearchMemberFilter;
 import com.example.librarymanagement.repository.MemberRepository;
+import com.example.librarymanagement.utils.specifications.MemberSpecifications;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,18 +21,6 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
-    public Iterable<Member> getAllMembers() {
-        return memberRepository.findAll();
-    }
-
-    public List<Member> getActiveMembers(Boolean active) {
-        return memberRepository.findByActive(active);
-    }
-
-    public Member getMemberById(Long id) {
-        return memberRepository.findById(id).orElseThrow(MemberNonExistentException::new);
-    }
-
     public void addMember(Member member) {
         try {
             memberRepository.save(member);
@@ -38,14 +29,16 @@ public class MemberService {
         }
     }
 
-    public List<Member> getMembersByLastName(String lastName) {
-        return memberRepository.findByLastName(lastName);
-    }
-
-    public List<Member> getMembers(String lastName) {
-        if(lastName !=  null)
-            return memberRepository.findByLastName(lastName);
-        return memberRepository.findAll();
+    public List<Member> getMembers(SearchMemberFilter filter){
+        Specification<Member> specification = Specification.
+                where(MemberSpecifications.byId(filter.id()))
+                .and(MemberSpecifications.byFirstName(filter.firstName()))
+                .and(MemberSpecifications.byLastName(filter.lastName()))
+                .and(MemberSpecifications.byEmail(filter.email()))
+                .and(MemberSpecifications.byStartBirthDate(filter.startDateOfBirth()))
+                .and(MemberSpecifications.byEndBirthDate(filter.endDateOfBirth())
+                .and(MemberSpecifications.byActive(filter.active())));
+        return memberRepository.findAll(specification);
     }
 
 }

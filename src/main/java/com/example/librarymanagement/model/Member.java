@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 public class Member {
@@ -15,13 +15,13 @@ public class Member {
     private String lastName;
     private String firstName;
     private Boolean active;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     @Column(unique = true)
     private String email;
 
     public Member() {}
 
-    public Member(Long id, String lastName, String firstName, String email, Boolean active, Date dateOfBirth) {
+    public Member(Long id, String lastName, String firstName, String email, Boolean active, LocalDate dateOfBirth) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -70,11 +70,11 @@ public class Member {
         this.active = active;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
