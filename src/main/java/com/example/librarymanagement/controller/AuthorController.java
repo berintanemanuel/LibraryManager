@@ -1,6 +1,7 @@
 package com.example.librarymanagement.controller;
 
 import com.example.librarymanagement.model.Author;
+import com.example.librarymanagement.model.dto.SearchAuthorFilter;
 import com.example.librarymanagement.service.AuthorService;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,13 +22,10 @@ public class AuthorController {
     }
 
     @GetMapping
-    public List<Author> getAuthors(){
-        return authorService.getAllAuthors();
-    }
-
-    @GetMapping("/{id}")
-    public Author getAuthorById(@PathVariable Long id){
-        return authorService.getAuthorById(id);
+    public List<Author> getAuthors(@RequestParam(required = false) Long id,
+                                   @RequestParam(required = false) String firstName,
+                                   @RequestParam(required = false) String lastName){
+        return authorService.getAuthors(new SearchAuthorFilter(id, firstName, lastName));
     }
 
 }
