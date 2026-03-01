@@ -1,7 +1,7 @@
 package com.example.librarymanagement.controller;
 
 import com.example.librarymanagement.model.Borrowing;
-import com.example.librarymanagement.model.dto.SearchBorrowingFilter;
+import com.example.librarymanagement.utils.filters.SearchBorrowingFilter;
 import com.example.librarymanagement.service.BorrowingService;
 import org.springframework.web.bind.annotation.*;
 

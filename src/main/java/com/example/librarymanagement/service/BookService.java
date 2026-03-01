@@ -1,12 +1,11 @@
 package com.example.librarymanagement.service;
 
 import com.example.librarymanagement.exceptions.AuthorNonExistentException;
-import com.example.librarymanagement.exceptions.BookNonExistentException;
 import com.example.librarymanagement.exceptions.DuplicateBookException;
 import com.example.librarymanagement.model.Author;
 import com.example.librarymanagement.model.Book;
-import com.example.librarymanagement.model.dto.CreateBookRequest;
-import com.example.librarymanagement.model.dto.SearchBookFilter;
+import com.example.librarymanagement.utils.requests.CreateBookRequest;
+import com.example.librarymanagement.utils.filters.SearchBookFilter;
 import com.example.librarymanagement.repository.AuthorRepository;
 import com.example.librarymanagement.repository.BookRepository;
 import com.example.librarymanagement.utils.specifications.BookSpecifications;

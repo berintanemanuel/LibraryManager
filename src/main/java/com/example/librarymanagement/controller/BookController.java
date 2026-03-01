@@ -1,8 +1,8 @@
 package com.example.librarymanagement.controller;
 
 import com.example.librarymanagement.model.Book;
-import com.example.librarymanagement.model.dto.CreateBookRequest;
-import com.example.librarymanagement.model.dto.SearchBookFilter;
+import com.example.librarymanagement.utils.requests.CreateBookRequest;
+import com.example.librarymanagement.utils.filters.SearchBookFilter;
 import com.example.librarymanagement.service.BookService;
 import org.springframework.web.bind.annotation.*;
 

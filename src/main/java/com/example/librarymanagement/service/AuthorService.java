@@ -1,8 +1,7 @@
 package com.example.librarymanagement.service;
 
-import com.example.librarymanagement.exceptions.AuthorNonExistentException;
 import com.example.librarymanagement.model.Author;
-import com.example.librarymanagement.model.dto.SearchAuthorFilter;
+import com.example.librarymanagement.utils.filters.SearchAuthorFilter;
 import com.example.librarymanagement.repository.AuthorRepository;
 import com.example.librarymanagement.utils.specifications.AuthorSpecifications;
 import org.springframework.data.jpa.domain.Specification;

@@ -1,7 +1,7 @@
 package com.example.librarymanagement.controller;
 
 import com.example.librarymanagement.model.Author;
-import com.example.librarymanagement.model.dto.SearchAuthorFilter;
+import com.example.librarymanagement.utils.filters.SearchAuthorFilter;
 import com.example.librarymanagement.service.AuthorService;
 import org.springframework.web.bind.annotation.*;
 

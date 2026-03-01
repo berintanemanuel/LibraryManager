@@ -1,9 +1,8 @@
 package com.example.librarymanagement.service;
 
 import com.example.librarymanagement.exceptions.DuplicateMemberException;
-import com.example.librarymanagement.exceptions.MemberNonExistentException;
 import com.example.librarymanagement.model.Member;
-import com.example.librarymanagement.model.dto.SearchMemberFilter;
+import com.example.librarymanagement.utils.filters.SearchMemberFilter;
 import com.example.librarymanagement.repository.MemberRepository;
 import com.example.librarymanagement.utils.specifications.MemberSpecifications;
 import org.springframework.dao.DataIntegrityViolationException;

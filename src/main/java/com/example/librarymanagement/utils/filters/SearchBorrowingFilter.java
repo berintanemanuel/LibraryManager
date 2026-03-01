@@ -1,4 +1,4 @@
-package com.example.librarymanagement.model.dto;
+package com.example.librarymanagement.utils.filters;
 
 import java.time.LocalDate;
 

@@ -2,12 +2,11 @@ package com.example.librarymanagement.service;
 
 import com.example.librarymanagement.exceptions.BookNonExistentException;
 import com.example.librarymanagement.exceptions.BookNotInStockException;
-import com.example.librarymanagement.exceptions.InvalidDateException;
 import com.example.librarymanagement.exceptions.MemberNonExistentException;
 import com.example.librarymanagement.model.Book;
 import com.example.librarymanagement.model.Borrowing;
 import com.example.librarymanagement.model.Member;
-import com.example.librarymanagement.model.dto.SearchBorrowingFilter;
+import com.example.librarymanagement.utils.filters.SearchBorrowingFilter;
 import com.example.librarymanagement.repository.BookRepository;
 import com.example.librarymanagement.repository.BorrowingRepository;
 import com.example.librarymanagement.repository.MemberRepository;
