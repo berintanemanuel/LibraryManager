@@ -28,4 +28,14 @@ public class AuthorController {
         return authorService.getAuthors(new SearchAuthorFilter(id, firstName, lastName));
     }
 
+    @DeleteMapping
+    public void deleteAuthor(@RequestParam Long id){
+        authorService.deleteAuthor(id);
+    }
+
+    @PutMapping
+    public void updateAuthor(@RequestParam Long id, @RequestBody Author author){
+        authorService.updateAuthor(id, author);
+    }
+
 }
