@@ -48,11 +48,24 @@ public class BorrowingService {
 
     public List<Borrowing> getBorrowings(SearchBorrowingFilter filter) {
         Specification<Borrowing> specification = Specification.
-                where(BorrowingSpecifications.byMemberId(filter.memberId()))
+                where(BorrowingSpecifications.byId(filter.id())).
+                and(BorrowingSpecifications.byMemberId(filter.memberId()))
                 .and(BorrowingSpecifications.byBookId(filter.bookId()))
                 .and(BorrowingSpecifications.byBorrowDate(filter.borrowDate()))
                 .and(BorrowingSpecifications.byReturnDate(filter.returnDate()))
                 .and(BorrowingSpecifications.byReturned(filter.returned()));
         return borrowingRepository.findAll(specification);
+    }
+
+    public void deleteBorrowing(Long borrowingId) {
+        borrowingRepository.deleteById(borrowingId);
+    }
+
+    @Transactional
+    public void closeBorrowing(Long borrowingId) {
+        Borrowing borrowing = borrowingRepository.findById(borrowingId).orElseThrow(BookNonExistentException::new);
+        borrowing.setReturned(true);
+        borrowing.setReturnDate(LocalDate.now());
+        borrowingRepository.save(borrowing);
     }
 }

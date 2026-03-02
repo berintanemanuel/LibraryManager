@@ -2,10 +2,19 @@ package com.example.librarymanagement.utils.specifications;
 
 import com.example.librarymanagement.model.Borrowing;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 
 public class BorrowingSpecifications {
+
+    public static Specification<Borrowing> byId(@RequestParam Long id) {
+        return ((root, query, criteriaBuilder) -> {
+            if(id == null) return null;
+            return criteriaBuilder.equal(root.get("id"), id);
+        });
+    }
+
     public static Specification<Borrowing> byMemberId(Long memberId) {
         return ((root, query, criteriaBuilder) -> {
             if(memberId == null) return null;

@@ -19,12 +19,28 @@ public class BorrowingController {
     }
 
     @GetMapping
-    public List<Borrowing> getBorrowings(@RequestParam(required = false) Long memberId,
+    public List<Borrowing> getBorrowings(@RequestParam(required = false) Long id,
+                                         @RequestParam(required = false) Long memberId,
                                          @RequestParam(required = false) Long bookId,
                                          @RequestParam(required = false) Boolean returned,
                                          @RequestParam(required = false) LocalDate borrowDate,
                                          @RequestParam(required = false) LocalDate returnDate) {
-        return borrowingService.getBorrowings(new SearchBorrowingFilter(memberId, borrowDate, returnDate, bookId, returned));
+        return borrowingService.getBorrowings(new SearchBorrowingFilter(id, memberId, borrowDate, returnDate, bookId, returned));
+    }
+
+    @PostMapping
+    public void borrowBook(@RequestParam Long bookId, @RequestParam Long memberId){
+        borrowingService.borrowBook(bookId, memberId);
+    }
+
+    @DeleteMapping
+    public void deleteBorrowing(@RequestParam Long borrowingId) {
+        borrowingService.deleteBorrowing(borrowingId);
+    }
+
+    @PutMapping
+    public void closeBorrowing(@RequestParam Long borrowingId) {
+        borrowingService.closeBorrowing(borrowingId);
     }
 
 }

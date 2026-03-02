@@ -10,7 +10,7 @@ import java.util.Date;
 public class Borrowing {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long borrowingId;
+    private Long id;
     @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
@@ -37,12 +37,12 @@ public class Borrowing {
         this.returnDate = null;
     }
 
-    public Long getBorrowingId() {
-        return borrowingId;
+    public Long getId() {
+        return id;
     }
 
-    public void setBorrowingId(Long borrowingId) {
-        this.borrowingId = borrowingId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Book getBook() {
