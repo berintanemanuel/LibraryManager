@@ -31,4 +31,15 @@ public class BookController {
     public void addBook(@RequestBody CreateBookRequest createBookRequest){
         bookService.addBook(createBookRequest);
     }
+
+    @DeleteMapping
+    public void deleteBook(@RequestParam Long id){
+        bookService.deleteBook(id);
+    }
+
+    @PutMapping
+    public void updateBook(@RequestParam Long id, @RequestBody CreateBookRequest createBookRequest){
+        bookService.updateBook(id, createBookRequest);
+    }
+
 }

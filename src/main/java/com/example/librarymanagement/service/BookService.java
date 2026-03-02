@@ -1,6 +1,7 @@
 package com.example.librarymanagement.service;
 
 import com.example.librarymanagement.exceptions.AuthorNonExistentException;
+import com.example.librarymanagement.exceptions.BookNonExistentException;
 import com.example.librarymanagement.exceptions.DuplicateBookException;
 import com.example.librarymanagement.model.Author;
 import com.example.librarymanagement.model.Book;
@@ -42,8 +43,6 @@ public class BookService {
         }
     }
 
-
-
     public List<Book> getBooks(SearchBookFilter filter){
         Specification<Book> specification = Specification
                 .where(BookSpecifications.byId(filter.id())
@@ -55,4 +54,26 @@ public class BookService {
                 .and(BookSpecifications.byQuantityInStockUpperBound(filter.quantityInStockUpperBound())));
         return bookRepository.findAll(specification);
     }
+
+    public void deleteBook(Long id){
+        try{
+            bookRepository.deleteById(id);
+        } catch(DataIntegrityViolationException e){
+            throw new BookNonExistentException();
+        }
+    }
+
+    public void updateBook(Long id, CreateBookRequest bookRequest){
+        Book book = bookRepository.findById(id).orElseThrow(BookNonExistentException::new);
+
+        Author newAuthor = authorRepository.findById(bookRequest.authorId()).orElseThrow(AuthorNonExistentException::new);
+
+        book.setTitle(bookRequest.title());
+        book.setIsbn(bookRequest.isbn());
+        book.setGenre(bookRequest.genre());
+        book.setAuthor(newAuthor);
+        book.setQuantityInStock(bookRequest.quantityInStock());
+        bookRepository.save(book);
+    }
+
 }
