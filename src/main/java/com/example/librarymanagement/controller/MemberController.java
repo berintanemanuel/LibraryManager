@@ -32,4 +32,14 @@ public class MemberController {
     public void addMember(@RequestBody Member member){
         this.memberService.addMember(member);
     }
+
+    @DeleteMapping
+    public void deleteMember(@RequestParam Long id){
+        this.memberService.deleteMember(id);
+    }
+
+    @PutMapping
+    public void updateMember(@RequestParam Long id,@RequestBody Member member){
+        this.memberService.updateMember(id, member);
+    }
 }

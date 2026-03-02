@@ -1,6 +1,7 @@
 package com.example.librarymanagement.service;
 
 import com.example.librarymanagement.exceptions.DuplicateMemberException;
+import com.example.librarymanagement.exceptions.MemberNonExistentException;
 import com.example.librarymanagement.model.Member;
 import com.example.librarymanagement.utils.filters.SearchMemberFilter;
 import com.example.librarymanagement.repository.MemberRepository;
@@ -38,6 +39,20 @@ public class MemberService {
                 .and(MemberSpecifications.byEndBirthDate(filter.endDateOfBirth())
                 .and(MemberSpecifications.byActive(filter.active())));
         return memberRepository.findAll(specification);
+    }
+
+    public void deleteMember(Long id){
+        memberRepository.deleteById(id);
+    }
+
+    public void updateMember(Long id, Member newMember) {
+        Member member = memberRepository.findById(id).orElseThrow(MemberNonExistentException::new);
+        member.setFirstName(newMember.getFirstName());
+        member.setLastName(newMember.getLastName());
+        member.setEmail(newMember.getEmail());
+        member.setDateOfBirth(newMember.getDateOfBirth());
+        member.setActive(newMember.getActive());
+        memberRepository.save(member);
     }
 
 }
