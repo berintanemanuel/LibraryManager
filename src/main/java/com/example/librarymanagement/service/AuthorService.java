@@ -5,6 +5,7 @@ import com.example.librarymanagement.model.Author;
 import com.example.librarymanagement.utils.filters.SearchAuthorFilter;
 import com.example.librarymanagement.repository.AuthorRepository;
 import com.example.librarymanagement.utils.specifications.AuthorSpecifications;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -31,8 +32,7 @@ public class AuthorService {
     }
 
     public void deleteAuthor(Long authorId) {
-        Author author = authorRepository.findById(authorId).orElseThrow(AuthorNonExistentException::new);
-        authorRepository.delete(author);
+        authorRepository.deleteById(authorId);
     }
 
     public void updateAuthor(Long authorId, Author newAuthor) {
