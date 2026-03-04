@@ -1,8 +1,8 @@
 package com.example.librarymanagement.controller;
 
-import com.example.librarymanagement.model.Borrowing;
 import com.example.librarymanagement.utils.filters.SearchBorrowingFilter;
 import com.example.librarymanagement.service.BorrowingService;
+import com.example.librarymanagement.utils.responses.BorrowingResponseDTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -19,12 +19,12 @@ public class BorrowingController {
     }
 
     @GetMapping
-    public List<Borrowing> getBorrowings(@RequestParam(required = false) Long id,
-                                         @RequestParam(required = false) Long memberId,
-                                         @RequestParam(required = false) Long bookId,
-                                         @RequestParam(required = false) Boolean returned,
-                                         @RequestParam(required = false) LocalDate borrowDate,
-                                         @RequestParam(required = false) LocalDate returnDate) {
+    public List<BorrowingResponseDTO> getBorrowings(@RequestParam(required = false) Long id,
+                                                    @RequestParam(required = false) Long memberId,
+                                                    @RequestParam(required = false) Long bookId,
+                                                    @RequestParam(required = false) Boolean returned,
+                                                    @RequestParam(required = false) LocalDate borrowDate,
+                                                    @RequestParam(required = false) LocalDate returnDate) {
         return borrowingService.getBorrowings(new SearchBorrowingFilter(id, memberId, borrowDate, returnDate, bookId, returned));
     }
 

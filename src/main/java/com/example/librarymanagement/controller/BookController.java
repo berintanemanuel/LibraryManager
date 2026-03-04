@@ -1,9 +1,9 @@
 package com.example.librarymanagement.controller;
 
-import com.example.librarymanagement.model.Book;
-import com.example.librarymanagement.utils.requests.CreateBookRequest;
+import com.example.librarymanagement.utils.requests.BookRequestDTO;
 import com.example.librarymanagement.utils.filters.SearchBookFilter;
 import com.example.librarymanagement.service.BookService;
+import com.example.librarymanagement.utils.responses.BookResponseDTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,19 +17,19 @@ public class BookController {
     }
 
     @GetMapping
-    public List<Book> getBooks(@RequestParam(required = false) String title,
-                               @RequestParam(required = false) String isbn,
-                               @RequestParam(required = false) Long authorId,
-                               @RequestParam(required = false) Long id,
-                               @RequestParam(required = false) Long quantityInStockLowerBound,
-                               @RequestParam(required = false) Long quantityInStockUpperBound,
-                               @RequestParam(required = false) String genre){
+    public List<BookResponseDTO> getBooks(@RequestParam(required = false) String title,
+                                          @RequestParam(required = false) String isbn,
+                                          @RequestParam(required = false) Long authorId,
+                                          @RequestParam(required = false) Long id,
+                                          @RequestParam(required = false) Long quantityInStockLowerBound,
+                                          @RequestParam(required = false) Long quantityInStockUpperBound,
+                                          @RequestParam(required = false) String genre){
         return bookService.getBooks(new SearchBookFilter(id, title, isbn, genre, authorId, quantityInStockLowerBound, quantityInStockUpperBound));
     }
 
     @PostMapping
-    public void addBook(@RequestBody CreateBookRequest createBookRequest){
-        bookService.addBook(createBookRequest);
+    public void addBook(@RequestBody BookRequestDTO bookRequestDTO){
+        bookService.addBook(bookRequestDTO);
     }
 
     @DeleteMapping
@@ -38,8 +38,8 @@ public class BookController {
     }
 
     @PutMapping
-    public void updateBook(@RequestParam Long id, @RequestBody CreateBookRequest createBookRequest){
-        bookService.updateBook(id, createBookRequest);
+    public void updateBook(@RequestParam Long id, @RequestBody BookRequestDTO bookRequestDTO){
+        bookService.updateBook(id, bookRequestDTO);
     }
 
 }

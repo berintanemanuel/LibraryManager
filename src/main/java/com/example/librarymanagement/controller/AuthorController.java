@@ -4,6 +4,8 @@ import com.example.librarymanagement.exceptions.AuthorNonExistentException;
 import com.example.librarymanagement.model.Author;
 import com.example.librarymanagement.utils.filters.SearchAuthorFilter;
 import com.example.librarymanagement.service.AuthorService;
+import com.example.librarymanagement.utils.requests.AuthorRequestDTO;
+import com.example.librarymanagement.utils.responses.AuthorResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
@@ -20,14 +22,14 @@ public class AuthorController {
     }
 
     @PostMapping
-    public void addAuthor(@RequestBody Author author){
+    public void addAuthor(@RequestBody AuthorRequestDTO author){
         authorService.addAuthor(author);
     }
 
     @GetMapping
-    public List<Author> getAuthors(@RequestParam(required = false) Long id,
-                                   @RequestParam(required = false) String firstName,
-                                   @RequestParam(required = false) String lastName){
+    public List<AuthorResponseDTO> getAuthors(@RequestParam(required = false) Long id,
+                                              @RequestParam(required = false) String firstName,
+                                              @RequestParam(required = false) String lastName){
         return authorService.getAuthors(new SearchAuthorFilter(id, firstName, lastName));
     }
 
@@ -37,7 +39,7 @@ public class AuthorController {
     }
 
     @PutMapping
-    public void updateAuthor(@RequestParam Long id, @RequestBody Author author){
-        authorService.updateAuthor(id, author);
+    public void updateAuthor(@RequestParam Long id, @RequestBody AuthorRequestDTO authorDto){
+        authorService.updateAuthor(id, authorDto);
     }
 }

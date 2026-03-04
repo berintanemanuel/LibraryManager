@@ -8,6 +8,4 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AuthorRepository extends JpaRepository<Author, Long>, JpaSpecificationExecutor<Author> {
-    List<Author> findByFirstName(String firstName);
-    List<Author> findByLastName(String lastName);
 }

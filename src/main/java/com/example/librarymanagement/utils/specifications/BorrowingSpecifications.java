@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 public class BorrowingSpecifications {
 
-    public static Specification<Borrowing> byId(@RequestParam Long id) {
+    public static Specification<Borrowing> byId(Long id) {
         return ((root, query, criteriaBuilder) -> {
             if(id == null) return null;
             return criteriaBuilder.equal(root.get("id"), id);
