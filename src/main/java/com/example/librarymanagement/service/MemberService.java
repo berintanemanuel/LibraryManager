@@ -25,7 +25,7 @@ public class MemberService {
         try {
             memberRepository.save(member);
         }  catch (DataIntegrityViolationException e) {
-            throw new DuplicateMemberException();
+            throw new DuplicateMemberException("Member already exists");
         }
     }
 

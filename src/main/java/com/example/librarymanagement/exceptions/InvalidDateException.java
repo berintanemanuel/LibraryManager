@@ -5,6 +5,6 @@ public class InvalidDateException extends RuntimeException {
         super(message);
     }
     public InvalidDateException(){
-        super();
+        super("Invalid date");
     }
 }

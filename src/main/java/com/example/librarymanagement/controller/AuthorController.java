@@ -1,8 +1,11 @@
 package com.example.librarymanagement.controller;
 
+import com.example.librarymanagement.exceptions.AuthorNonExistentException;
 import com.example.librarymanagement.model.Author;
 import com.example.librarymanagement.utils.filters.SearchAuthorFilter;
 import com.example.librarymanagement.service.AuthorService;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,5 +40,4 @@ public class AuthorController {
     public void updateAuthor(@RequestParam Long id, @RequestBody Author author){
         authorService.updateAuthor(id, author);
     }
-
 }
