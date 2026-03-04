@@ -27,6 +27,12 @@ public class ExceptionControllerAdvice {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorDetails);
     }
 
+    @ExceptionHandler(BookNotInStockException.class)
+    public ResponseEntity<ErrorDetails> exceptionBookNotInStock(){
+        ErrorDetails errorDetails = new ErrorDetails("Book Not In Stock");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorDetails);
+    }
+
     @ExceptionHandler(DuplicateBookException.class)
     public ResponseEntity<ErrorDetails> exceptionDuplicateBook(){
         ErrorDetails errorDetails = new ErrorDetails("Book already exists");
