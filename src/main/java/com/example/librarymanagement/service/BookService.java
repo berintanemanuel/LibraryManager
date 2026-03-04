@@ -5,10 +5,11 @@ import com.example.librarymanagement.exceptions.BookNonExistentException;
 import com.example.librarymanagement.exceptions.DuplicateBookException;
 import com.example.librarymanagement.model.Author;
 import com.example.librarymanagement.model.Book;
-import com.example.librarymanagement.utils.requests.CreateBookRequest;
+import com.example.librarymanagement.utils.requests.BookRequestDTO;
 import com.example.librarymanagement.utils.filters.SearchBookFilter;
 import com.example.librarymanagement.repository.AuthorRepository;
 import com.example.librarymanagement.repository.BookRepository;
+import com.example.librarymanagement.utils.responses.BookResponseDTO;
 import com.example.librarymanagement.utils.specifications.BookSpecifications;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.jpa.domain.Specification;
@@ -28,14 +29,14 @@ public class BookService {
     }
 
     @Transactional
-    public void addBook(CreateBookRequest createBookRequest) {
-        Author author = authorRepository.findById(createBookRequest.authorId()).orElseThrow(AuthorNonExistentException::new);
+    public void addBook(BookRequestDTO bookRequestDTO) {
+        Author author = authorRepository.findById(bookRequestDTO.authorId()).orElseThrow(AuthorNonExistentException::new);
         Book book = new Book();
-        book.setTitle(createBookRequest.title());
-        book.setIsbn(createBookRequest.isbn());
-        book.setGenre(createBookRequest.genre());
+        book.setTitle(bookRequestDTO.title());
+        book.setIsbn(bookRequestDTO.isbn());
+        book.setGenre(bookRequestDTO.genre());
         book.setAuthor(author);
-        book.setQuantityInStock(createBookRequest.quantityInStock());
+        book.setQuantityInStock(bookRequestDTO.quantityInStock());
         try{
             bookRepository.save(book);
         } catch(DataIntegrityViolationException e){
@@ -43,7 +44,7 @@ public class BookService {
         }
     }
 
-    public List<Book> getBooks(SearchBookFilter filter){
+    public List<BookResponseDTO> getBooks(SearchBookFilter filter){
         Specification<Book> specification = Specification
                 .where(BookSpecifications.byId(filter.id())
                 .and(BookSpecifications.byIsbn(filter.isbn()))
@@ -52,7 +53,8 @@ public class BookService {
                 .and(BookSpecifications.byTitle(filter.title()))
                 .and(BookSpecifications.byQuantityInStockLowerBound(filter.quantityInStockLowerBound()))
                 .and(BookSpecifications.byQuantityInStockUpperBound(filter.quantityInStockUpperBound())));
-        return bookRepository.findAll(specification);
+        List<Book> books = bookRepository.findAll(specification);
+        return books.stream().map(BookResponseDTO::createFromBook).toList();
     }
 
     public void deleteBook(Long id){
@@ -63,7 +65,7 @@ public class BookService {
         }
     }
 
-    public void updateBook(Long id, CreateBookRequest bookRequest){
+    public void updateBook(Long id, BookRequestDTO bookRequest){
         Book book = bookRepository.findById(id).orElseThrow(BookNonExistentException::new);
 
         Author newAuthor = authorRepository.findById(bookRequest.authorId()).orElseThrow(AuthorNonExistentException::new);
