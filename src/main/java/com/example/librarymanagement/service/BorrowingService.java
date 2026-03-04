@@ -37,7 +37,7 @@ public class BorrowingService {
 
         ///  Check to see if the book is in stock
         if(book.getQuantityInStock() == 0)
-            throw new BookNotInStockException();
+            throw new BookNotInStockException("Book Not In Stock");
 
         /// Borrow the book, decrement its stock and add into the borrowingRepository
         book.decrementQuantityInStock();

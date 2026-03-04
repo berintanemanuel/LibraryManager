@@ -39,7 +39,7 @@ public class BookService {
         try{
             bookRepository.save(book);
         } catch(DataIntegrityViolationException e){
-            throw new DuplicateBookException();
+            throw new DuplicateBookException("Book already exists");
         }
     }
 
@@ -59,7 +59,7 @@ public class BookService {
         try{
             bookRepository.deleteById(id);
         } catch(DataIntegrityViolationException e){
-            throw new BookNonExistentException();
+            throw new BookNonExistentException("No book with given id found");
         }
     }
 
