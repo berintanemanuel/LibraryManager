@@ -3,6 +3,8 @@ package com.example.librarymanagement.controller;
 import com.example.librarymanagement.model.Member;
 import com.example.librarymanagement.utils.filters.SearchMemberFilter;
 import com.example.librarymanagement.service.MemberService;
+import com.example.librarymanagement.utils.requests.MemberRequestDTO;
+import com.example.librarymanagement.utils.responses.MemberResponseDTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -18,19 +20,19 @@ public class MemberController {
     }
 
     @GetMapping
-    public List<Member> getMembers(@RequestParam(required = false) Long id,
-                                   @RequestParam(required = false) String firstName,
-                                   @RequestParam(required = false) String lastName,
-                                   @RequestParam(required = false) String email,
-                                   @RequestParam(required = false) LocalDate startDateOfBirth,
-                                   @RequestParam(required = false) LocalDate endDateOfBirth,
-                                   @RequestParam(required = false) Boolean active){
+    public List<MemberResponseDTO> getMembers(@RequestParam(required = false) Long id,
+                                              @RequestParam(required = false) String firstName,
+                                              @RequestParam(required = false) String lastName,
+                                              @RequestParam(required = false) String email,
+                                              @RequestParam(required = false) LocalDate startDateOfBirth,
+                                              @RequestParam(required = false) LocalDate endDateOfBirth,
+                                              @RequestParam(required = false) Boolean active){
         return this.memberService.getMembers(new SearchMemberFilter(id, firstName, lastName, active, startDateOfBirth, endDateOfBirth, email));
     }
 
     @PostMapping
-    public void addMember(@RequestBody Member member){
-        this.memberService.addMember(member);
+    public void addMember(@RequestBody MemberRequestDTO memberDto){
+        this.memberService.addMember(memberDto);
     }
 
     @DeleteMapping
@@ -39,7 +41,7 @@ public class MemberController {
     }
 
     @PutMapping
-    public void updateMember(@RequestParam Long id,@RequestBody Member member){
-        this.memberService.updateMember(id, member);
+    public void updateMember(@RequestParam Long id,@RequestBody MemberRequestDTO memberDto){
+        this.memberService.updateMember(id, memberDto);
     }
 }

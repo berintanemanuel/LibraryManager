@@ -21,8 +21,7 @@ public class Member {
 
     public Member() {}
 
-    public Member(Long id, String lastName, String firstName, String email, Boolean active, LocalDate dateOfBirth) {
-        this.id = id;
+    public Member(String lastName, String firstName, String email, Boolean active, LocalDate dateOfBirth) {
         this.lastName = lastName;
         this.firstName = firstName;
         this.email = email;
