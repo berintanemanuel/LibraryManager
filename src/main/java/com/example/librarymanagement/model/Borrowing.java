@@ -1,10 +1,8 @@
 package com.example.librarymanagement.model;
 
 import jakarta.persistence.*;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 public class Borrowing {
@@ -19,7 +17,7 @@ public class Borrowing {
     private Member member;
     private LocalDate borrowDate;
     private LocalDate returnDate;
-    private Boolean returned;
+    private Boolean returned = false;
 
     public Borrowing() {}
 

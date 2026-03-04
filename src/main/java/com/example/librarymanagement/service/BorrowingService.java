@@ -10,6 +10,7 @@ import com.example.librarymanagement.utils.filters.SearchBorrowingFilter;
 import com.example.librarymanagement.repository.BookRepository;
 import com.example.librarymanagement.repository.BorrowingRepository;
 import com.example.librarymanagement.repository.MemberRepository;
+import com.example.librarymanagement.utils.responses.BorrowingResponseDTO;
 import com.example.librarymanagement.utils.specifications.BorrowingSpecifications;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -46,7 +47,7 @@ public class BorrowingService {
         borrowingRepository.save(borrowing);
     }
 
-    public List<Borrowing> getBorrowings(SearchBorrowingFilter filter) {
+    public List<BorrowingResponseDTO> getBorrowings(SearchBorrowingFilter filter) {
         Specification<Borrowing> specification = Specification.
                 where(BorrowingSpecifications.byId(filter.id())).
                 and(BorrowingSpecifications.byMemberId(filter.memberId()))
@@ -54,7 +55,8 @@ public class BorrowingService {
                 .and(BorrowingSpecifications.byBorrowDate(filter.borrowDate()))
                 .and(BorrowingSpecifications.byReturnDate(filter.returnDate()))
                 .and(BorrowingSpecifications.byReturned(filter.returned()));
-        return borrowingRepository.findAll(specification);
+        List<Borrowing> borrowings = borrowingRepository.findAll(specification);
+        return borrowings.stream().map(BorrowingResponseDTO::createFromBorrowing).toList();
     }
 
     public void deleteBorrowing(Long borrowingId) {
