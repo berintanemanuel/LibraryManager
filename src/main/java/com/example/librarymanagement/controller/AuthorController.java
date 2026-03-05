@@ -4,13 +4,11 @@ import com.example.librarymanagement.utils.filters.SearchAuthorFilter;
 import com.example.librarymanagement.service.AuthorService;
 import com.example.librarymanagement.utils.requests.AuthorRequestDTO;
 import com.example.librarymanagement.utils.responses.AuthorResponseDTO;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequestMapping("/authors")
 @RestController
