@@ -35,7 +35,7 @@ public class AuthorController {
     }
 
     @DeleteMapping
-    public ResponseEntity<AuthorResponseDTO> deleteAuthor(@RequestParam Long id){
+    public ResponseEntity<Void> deleteAuthor(@RequestParam Long id){
         authorService.deleteAuthor(id);
         return ResponseEntity.noContent().build();
     }

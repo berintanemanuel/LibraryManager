@@ -39,7 +39,7 @@ public class MemberController {
     }
 
     @DeleteMapping
-    public ResponseEntity<MemberResponseDTO> deleteMember(@RequestParam Long id){
+    public ResponseEntity<Void> deleteMember(@RequestParam Long id){
         this.memberService.deleteMember(id);
         return ResponseEntity.noContent().build();
     }

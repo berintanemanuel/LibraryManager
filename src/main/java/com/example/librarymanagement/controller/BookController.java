@@ -37,7 +37,7 @@ public class BookController {
     }
 
     @DeleteMapping
-    public ResponseEntity<BookResponseDTO> deleteBook(@RequestParam Long id){
+    public ResponseEntity<Void> deleteBook(@RequestParam Long id){
         bookService.deleteBook(id);
         return ResponseEntity.noContent().build();
     }

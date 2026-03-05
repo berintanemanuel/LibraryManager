@@ -38,7 +38,7 @@ public class BorrowingController {
     }
 
     @DeleteMapping
-    public ResponseEntity<BorrowingResponseDTO> deleteBorrowing(@RequestParam Long borrowingId) {
+    public ResponseEntity<Void> deleteBorrowing(@RequestParam Long borrowingId) {
         borrowingService.deleteBorrowing(borrowingId);
         return ResponseEntity.noContent().build();
     }
