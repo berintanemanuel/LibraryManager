@@ -1,6 +1,5 @@
 package com.example.librarymanagement.controller;
 
-import com.example.librarymanagement.model.Member;
 import com.example.librarymanagement.utils.filters.SearchMemberFilter;
 import com.example.librarymanagement.service.MemberService;
 import com.example.librarymanagement.utils.requests.MemberRequestDTO;

@@ -7,7 +7,6 @@ import com.example.librarymanagement.repository.AuthorRepository;
 import com.example.librarymanagement.utils.requests.AuthorRequestDTO;
 import com.example.librarymanagement.utils.responses.AuthorResponseDTO;
 import com.example.librarymanagement.utils.specifications.AuthorSpecifications;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -30,19 +29,21 @@ public class AuthorService {
         return authors.stream().map(AuthorResponseDTO::createFromAuthor).toList();
     }
 
-    public void addAuthor(AuthorRequestDTO authorDto) {
+    public AuthorResponseDTO addAuthor(AuthorRequestDTO authorDto) {
         Author author = new Author(authorDto.firstName(), authorDto.lastName());
         authorRepository.save(author);
+        return AuthorResponseDTO.createFromAuthor(author);
     }
 
     public void deleteAuthor(Long authorId) {
         authorRepository.deleteById(authorId);
     }
 
-    public void updateAuthor(Long authorId, AuthorRequestDTO newAuthor) {
+    public AuthorResponseDTO updateAuthor(Long authorId, AuthorRequestDTO newAuthor) {
         Author author = authorRepository.findById(authorId).orElseThrow(AuthorNonExistentException::new);
         author.setFirstName(newAuthor.firstName());
         author.setLastName(newAuthor.lastName());
         authorRepository.save(author);
+        return AuthorResponseDTO.createFromAuthor(author);
     }
 }
