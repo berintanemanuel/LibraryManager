@@ -29,7 +29,7 @@ public class BookService {
     }
 
     @Transactional
-    public void addBook(BookRequestDTO bookRequestDTO) {
+    public BookResponseDTO addBook(BookRequestDTO bookRequestDTO) {
         Author author = authorRepository.findById(bookRequestDTO.authorId()).orElseThrow(AuthorNonExistentException::new);
         Book book = new Book();
         book.setTitle(bookRequestDTO.title());
@@ -39,6 +39,7 @@ public class BookService {
         book.setQuantityInStock(bookRequestDTO.quantityInStock());
         try{
             bookRepository.save(book);
+            return BookResponseDTO.createFromBook(book);
         } catch(DataIntegrityViolationException e){
             throw new DuplicateBookException("Book already exists");
         }
@@ -65,7 +66,7 @@ public class BookService {
         }
     }
 
-    public void updateBook(Long id, BookRequestDTO bookRequest){
+    public BookResponseDTO updateBook(Long id, BookRequestDTO bookRequest){
         Book book = bookRepository.findById(id).orElseThrow(BookNonExistentException::new);
 
         Author newAuthor = authorRepository.findById(bookRequest.authorId()).orElseThrow(AuthorNonExistentException::new);
@@ -76,6 +77,7 @@ public class BookService {
         book.setAuthor(newAuthor);
         book.setQuantityInStock(bookRequest.quantityInStock());
         bookRepository.save(book);
+        return BookResponseDTO.createFromBook(book);
     }
 
 }

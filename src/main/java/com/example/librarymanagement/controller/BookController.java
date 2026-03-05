@@ -4,6 +4,8 @@ import com.example.librarymanagement.utils.requests.BookRequestDTO;
 import com.example.librarymanagement.utils.filters.SearchBookFilter;
 import com.example.librarymanagement.service.BookService;
 import com.example.librarymanagement.utils.responses.BookResponseDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,29 +19,33 @@ public class BookController {
     }
 
     @GetMapping
-    public List<BookResponseDTO> getBooks(@RequestParam(required = false) String title,
-                                          @RequestParam(required = false) String isbn,
-                                          @RequestParam(required = false) Long authorId,
-                                          @RequestParam(required = false) Long id,
-                                          @RequestParam(required = false) Long quantityInStockLowerBound,
-                                          @RequestParam(required = false) Long quantityInStockUpperBound,
-                                          @RequestParam(required = false) String genre){
-        return bookService.getBooks(new SearchBookFilter(id, title, isbn, genre, authorId, quantityInStockLowerBound, quantityInStockUpperBound));
+    public ResponseEntity<List<BookResponseDTO>> getBooks(@RequestParam(required = false) String title,
+                                                          @RequestParam(required = false) String isbn,
+                                                          @RequestParam(required = false) Long authorId,
+                                                          @RequestParam(required = false) Long id,
+                                                          @RequestParam(required = false) Long quantityInStockLowerBound,
+                                                          @RequestParam(required = false) Long quantityInStockUpperBound,
+                                                          @RequestParam(required = false) String genre){
+        List<BookResponseDTO> books = bookService.getBooks(new SearchBookFilter(id, title, isbn, genre, authorId, quantityInStockLowerBound, quantityInStockUpperBound));
+        return ResponseEntity.ok().body(books);
     }
 
     @PostMapping
-    public void addBook(@RequestBody BookRequestDTO bookRequestDTO){
-        bookService.addBook(bookRequestDTO);
+    public ResponseEntity<BookResponseDTO> addBook(@RequestBody BookRequestDTO bookRequestDTO){
+        BookResponseDTO book = bookService.addBook(bookRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(book);
     }
 
     @DeleteMapping
-    public void deleteBook(@RequestParam Long id){
+    public ResponseEntity<BookResponseDTO> deleteBook(@RequestParam Long id){
         bookService.deleteBook(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping
-    public void updateBook(@RequestParam Long id, @RequestBody BookRequestDTO bookRequestDTO){
-        bookService.updateBook(id, bookRequestDTO);
+    public ResponseEntity<BookResponseDTO> updateBook(@RequestParam Long id, @RequestBody BookRequestDTO bookRequestDTO){
+        BookResponseDTO book = bookService.updateBook(id, bookRequestDTO);
+        return ResponseEntity.ok().body(book);
     }
 
 }
