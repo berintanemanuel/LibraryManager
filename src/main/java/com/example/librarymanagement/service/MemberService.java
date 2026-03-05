@@ -23,7 +23,7 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
-    public void addMember(MemberRequestDTO memberDto) {
+    public MemberResponseDTO addMember(MemberRequestDTO memberDto) {
         try {
             Member member = new Member(
                     memberDto.lastName(),
@@ -33,6 +33,7 @@ public class MemberService {
                     memberDto.dateOfBirth()
             );
             memberRepository.save(member);
+            return MemberResponseDTO.createFromMember(member);
         }  catch (DataIntegrityViolationException e) {
             throw new DuplicateMemberException("Member already exists");
         }
@@ -55,7 +56,7 @@ public class MemberService {
         memberRepository.deleteById(id);
     }
 
-    public void updateMember(Long id, MemberRequestDTO newMember) {
+    public MemberResponseDTO updateMember(Long id, MemberRequestDTO newMember) {
         Member member = memberRepository.findById(id).orElseThrow(MemberNonExistentException::new);
         member.setFirstName(newMember.firstName());
         member.setLastName(newMember.lastName());
@@ -63,6 +64,7 @@ public class MemberService {
         member.setDateOfBirth(newMember.dateOfBirth());
         member.setActive(newMember.active());
         memberRepository.save(member);
+        return MemberResponseDTO.createFromMember(member);
     }
 
 }

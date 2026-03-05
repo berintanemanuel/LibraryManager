@@ -2,6 +2,7 @@ package com.example.librarymanagement.service;
 
 import com.example.librarymanagement.exceptions.BookNonExistentException;
 import com.example.librarymanagement.exceptions.BookNotInStockException;
+import com.example.librarymanagement.exceptions.BorrowingNonExistentException;
 import com.example.librarymanagement.exceptions.MemberNonExistentException;
 import com.example.librarymanagement.model.Book;
 import com.example.librarymanagement.model.Borrowing;
@@ -32,7 +33,7 @@ public class BorrowingService {
     }
 
     @Transactional
-    public void borrowBook(Long memberId, Long bookId) {
+    public BorrowingResponseDTO borrowBook(Long memberId, Long bookId) {
         Member member = memberRepository.findById(memberId).orElseThrow(MemberNonExistentException::new);
         Book book = bookRepository.findById(bookId).orElseThrow(BookNonExistentException::new);
 
@@ -45,6 +46,7 @@ public class BorrowingService {
 
         Borrowing borrowing = new Borrowing(book, member, LocalDate.now());
         borrowingRepository.save(borrowing);
+        return BorrowingResponseDTO.createFromBorrowing(borrowing);
     }
 
     public List<BorrowingResponseDTO> getBorrowings(SearchBorrowingFilter filter) {
@@ -64,10 +66,11 @@ public class BorrowingService {
     }
 
     @Transactional
-    public void closeBorrowing(Long borrowingId) {
-        Borrowing borrowing = borrowingRepository.findById(borrowingId).orElseThrow(BookNonExistentException::new);
+    public BorrowingResponseDTO closeBorrowing(Long borrowingId) {
+        Borrowing borrowing = borrowingRepository.findById(borrowingId).orElseThrow(BorrowingNonExistentException::new);
         borrowing.setReturned(true);
         borrowing.setReturnDate(LocalDate.now());
         borrowingRepository.save(borrowing);
+        return BorrowingResponseDTO.createFromBorrowing(borrowing);
     }
 }
