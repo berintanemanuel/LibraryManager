@@ -32,7 +32,7 @@ public class BorrowingService {
     }
 
     @Transactional
-    public void borrowBook(Long memberId, Long bookId) {
+    public BorrowingResponseDTO borrowBook(Long memberId, Long bookId) {
         Member member = memberRepository.findById(memberId).orElseThrow(MemberNonExistentException::new);
         Book book = bookRepository.findById(bookId).orElseThrow(BookNonExistentException::new);
 
@@ -45,6 +45,7 @@ public class BorrowingService {
 
         Borrowing borrowing = new Borrowing(book, member, LocalDate.now());
         borrowingRepository.save(borrowing);
+        return BorrowingResponseDTO.createFromBorrowing(borrowing);
     }
 
     public List<BorrowingResponseDTO> getBorrowings(SearchBorrowingFilter filter) {
@@ -64,10 +65,11 @@ public class BorrowingService {
     }
 
     @Transactional
-    public void closeBorrowing(Long borrowingId) {
+    public BorrowingResponseDTO closeBorrowing(Long borrowingId) {
         Borrowing borrowing = borrowingRepository.findById(borrowingId).orElseThrow(BookNonExistentException::new);
         borrowing.setReturned(true);
         borrowing.setReturnDate(LocalDate.now());
         borrowingRepository.save(borrowing);
+        return BorrowingResponseDTO.createFromBorrowing(borrowing);
     }
 }
